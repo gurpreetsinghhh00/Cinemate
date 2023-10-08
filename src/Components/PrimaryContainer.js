@@ -43,7 +43,7 @@ const PrimaryContainer = () => {
   };
 
   return (
-    <div className="w-full mt-16 h-56 sm:h-96 lg:h-[90vh] relative group">
+    <div className="w-full h-56 sm:h-96 lg:h-[90vh] relative group">
       <div
         className="w-full h-full bg-cover duration-500 opacity-80"
         style={

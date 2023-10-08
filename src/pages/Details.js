@@ -9,7 +9,7 @@ const Details = () => {
   const video = data[1];
 
   return (
-    <div className="w-screen mt-16">
+    <div className="w-screen">
       <div className="w-full aspect-video">
         <iframe
           className="w-full h-full"
@@ -46,7 +46,7 @@ const Details = () => {
                   )
                 </h1>
               </div>
-              <div className="space-x-2 py-2">
+              <div className="gap-2 py-2 flex flex-wrap">
                 {details?.genres &&
                   details?.genres.map((genre) => {
                     return (

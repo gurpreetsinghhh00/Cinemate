@@ -12,6 +12,7 @@ import Home from "./Components/Home";
 import Movies from "./pages/Movies";
 import TvShows from "./pages/TvShows";
 import Details from "./pages/Details";
+import Error from "./Components/Error";
 
 const App = () => {
   return (
@@ -26,6 +27,7 @@ const appRouter = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    errorElement: <Error />,
     children: [
       {
         path: "/",

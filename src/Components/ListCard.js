@@ -7,6 +7,7 @@ const ListCard = ({ title, poster_path, name }) => {
       <img
         src={IMAGE_URL + poster_path}
         className="rounded-t-lg cursor-pointer"
+        alt={title ? title : name}
       />
       <div className="py-4 px-3">
         <h1 className="font-bold h-[3rem] text-ellipsis overflow-hidden cursor-pointer">
