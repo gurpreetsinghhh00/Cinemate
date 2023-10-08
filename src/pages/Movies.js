@@ -1,24 +1,64 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { APT_OPTIONS } from "../constant";
 import Card from "../Components/Card";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 const Movies = () => {
-  const [moviesList, setMoviesList] = useState([]);
+  // const [moviesList, setMoviesList] = useState([]);
 
-  useEffect(() => {
-    getMoviesList();
-  }, []);
+  // useEffect(() => {
+  //   getMoviesList();
+  // }, []);
+
+  // const getMoviesList = async () => {
+  //   const data = await fetch(
+  //     "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1",
+  //     APT_OPTIONS
+  //   );
+  //   const json = await data.json();
+  //   setMoviesList(json.results);
+  // };
+
+  const [moviesList, setMoviesList] = useState([]);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const elementRef = useRef(null);
+
+  function onIntersection(entries) {
+    console.log(entries);
+    const firstEntry = entries[0];
+    if (firstEntry.isIntersecting && hasMore) {
+      getMoviesList();
+    }
+  }
 
   const getMoviesList = async () => {
     const data = await fetch(
-      "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1",
+      ` https://api.themoviedb.org/3/movie/popular?language=en-US&page=${page}`,
       APT_OPTIONS
     );
     const json = await data.json();
-    // console.log(json);
-    setMoviesList(json.results);
+    if (json?.results) {
+      setMoviesList((prev) => [...prev, ...json.results]);
+      setPage(page + 1);
+    } else {
+      setHasMore(false);
+    }
   };
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(onIntersection, { threshold: 1 });
+    if (observer && elementRef.current) {
+      observer.observe(elementRef.current);
+    }
+
+    return () => {
+      if (observer) {
+        observer.disconnect();
+      }
+    };
+  }, [moviesList]);
 
   return (
     <div className="w-full sm:p-2 mt-20">
@@ -28,6 +68,12 @@ const Movies = () => {
             <Card {...movie} />
           </Link>
         ))}
+      </div>
+      <div
+        ref={elementRef}
+        className="p-3 animate-pulse text-gray-300 text-xl text-center"
+      >
+        Loading...
       </div>
     </div>
   );

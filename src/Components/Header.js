@@ -1,34 +1,47 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import Logo from "../assets/img/Logo.png";
 import { APT_OPTIONS } from "../constant";
 import search1 from "../assets/img/search1.png";
 import cross1 from "../assets/img/cross1.png";
 import search2 from "../assets/img/search2.png";
+import { useDispatch, useSelector } from "react-redux";
+import { cacheSuggestions } from "../Utils/searchSlice";
 
 const Header = () => {
-  const [search, setSearch] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
   const [searchSuggestions, setSearchSuggestions] = useState([]);
   const [visible, setVisible] = useState(false);
+  const dispatch = useDispatch();
+  const cache = useSelector((store) => store.search);
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      getSearchSuggestions();
+      if (cache[searchQuery]) {
+        setSearchSuggestions(cache[searchQuery]);
+      } else {
+        getSearchSuggestions();
+      }
     }, 300);
 
     return () => {
       clearTimeout(timer);
     };
-  }, [search]);
+  }, [searchQuery]);
 
   const getSearchSuggestions = async () => {
     const data = await fetch(
-      "https://api.themoviedb.org/3/search/keyword?query=" + search + "&page=1",
+      "https://api.themoviedb.org/3/search/keyword?query=" +
+        searchQuery +
+        "&page=1",
       APT_OPTIONS
     );
     const json = await data.json();
-    // console.log(json);
     setSearchSuggestions(json.results.slice(0, 10));
+    dispatch(
+      cacheSuggestions({
+        [searchQuery]: json.results.slice(0, 10),
+      })
+    );
   };
 
   const navItems = [
@@ -83,7 +96,7 @@ const Header = () => {
         }`}
         onSubmit={(e) => {
           e.preventDefault;
-          setSearch("");
+          setSearchQuery("");
         }}
       >
         <div className="flex">
@@ -91,16 +104,12 @@ const Header = () => {
           <input
             className="p-3 outline-none italic w-full"
             placeholder="Search for movies, tv shows..."
-            value={search}
+            value={searchQuery}
             onChange={(e) => {
-              setSearch(e.target.value);
+              setSearchQuery(e.target.value);
             }}
           />
         </div>
-
-        {/* <button className="rounded-md bg-red-500 py-2 px-4 hover:bg-red-600">
-          Search
-        </button> */}
       </form>
       <ul className={`w-full bg-white ${visible ? "block" : "hidden"}`}>
         {searchSuggestions.map((suggestion) => {

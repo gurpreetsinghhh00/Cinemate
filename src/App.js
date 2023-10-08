@@ -3,7 +3,11 @@ import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import Layout from "./Components/Layout";
 import store from "./Utils/store";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import {
+  RouterProvider,
+  ScrollRestoration,
+  createBrowserRouter,
+} from "react-router-dom";
 import Home from "./Components/Home";
 import Movies from "./pages/Movies";
 import TvShows from "./pages/TvShows";
@@ -12,6 +16,7 @@ import Details from "./pages/Details";
 const App = () => {
   return (
     <Provider store={store}>
+      <ScrollRestoration />
       <Layout />
     </Provider>
   );

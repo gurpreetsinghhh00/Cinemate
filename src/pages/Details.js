@@ -9,7 +9,7 @@ const Details = () => {
   const video = data[1];
 
   return (
-    <div className="w-screen">
+    <div className="w-screen mt-16">
       <div className="w-full aspect-video">
         <iframe
           className="w-full h-full"
@@ -30,24 +30,21 @@ const Details = () => {
               : {}
           }
         ></div>
-        <div className="px-8 py-10 flex text-white gap-4 font-nunito">
+        <div className="px-8 py-10 flex flex-col md:flex-row text-white gap-4 font-nunito">
           <img
             src={`https://image.tmdb.org/t/p/original${details?.poster_path}`}
-            className="rounded-lg w-[300px] h-[500px] z-20"
+            className="rounded-lg w-3/4 md:w-[320px] md:h-[530px] z-20 m-auto sm:m-0 self-center"
           />
-          <div className="z-20 p-2 flex flex-col justify-between">
+          <div className="z-20 p-2 flex flex-col gap-y-10 justify-between">
             <div>
               <div className="text-4xl flex">
-                <h1 className="">
-                  {details?.title ? details?.title : details?.name}{" "}
-                </h1>
-                <p className="text-gray-300">
-                  (
+                <h1 className="text-gray-300">
+                  {details?.title ? details?.title : details?.name}(
                   {details?.release_date
                     ? details?.release_date?.split("-")[0]
                     : details?.first_air_date?.split("-")[0]}
                   )
-                </p>
+                </h1>
               </div>
               <div className="space-x-2 py-2">
                 {details?.genres &&
@@ -64,8 +61,9 @@ const Details = () => {
               </div>
             </div>
             <p className="italic text-gray-300">{details?.tagline}</p>
-            <div className="py-2 space-y-4">
-              <p className="p-2 object-contain">{details?.overview}</p>
+            <div className="py-2 space-y-4 w-full">
+              <h1 className="px-2 text-2xl">Overview:</h1>
+              <p className="px-2 object-contain">{details?.overview}</p>
               <button className="p-2 hover:scale-105 transition-all">
                 <a
                   href={details?.homepage}

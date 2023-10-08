@@ -11,15 +11,15 @@ const PrimaryContainer = () => {
     getTrending();
   }, []);
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      nextSlide();
-    }, 5000);
+  // useEffect(() => {
+  //   const timer = setInterval(() => {
+  //     nextSlide();
+  //   }, 5000);
 
-    return () => {
-      clearInterval(timer);
-    };
-  }, [currentIndex]);
+  //   return () => {
+  //     clearInterval(timer);
+  //   };
+  // }, [currentIndex]);
 
   const getTrending = async () => {
     const data = await fetch(
@@ -75,7 +75,7 @@ const PrimaryContainer = () => {
           "/" +
           trending[currentIndex]?.id
         }
-        className="underline absolute top-[85%] text-white text-xs sm:text-sm hover:border-red-600 hover:scale-105 left-5 sm:left-10 py-2 px-2 rounded-full border-white border-2"
+        className="underline absolute top-[85%] text-white border py-[6px] text-[8px] sm:text-sm hover:border-red-600 hover:scale-105 left-5 sm:left-10 sm:py-2 px-2 rounded-full border-white sm:border-2"
       >
         Know More
       </Link>

@@ -3,7 +3,7 @@ import { addUpcomingMovies } from "../Utils/movieSlice";
 import { useEffect } from "react";
 import { APT_OPTIONS } from "../constant";
 
-const useUpcoming = () => {
+const useUpcomingMovies = () => {
   const dispatch = useDispatch();
   const upcomingMovies = useSelector((store) => store.movie.upcomingMovies);
 
@@ -21,4 +21,4 @@ const useUpcoming = () => {
   };
 };
 
-export default useUpcoming;
+export default useUpcomingMovies;

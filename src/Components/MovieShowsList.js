@@ -27,6 +27,11 @@ const MovieShowsList = () => {
         data={movie.topRatedMovies}
         type="movie"
       />
+      <List
+        heading="Upcoming Movies"
+        data={movie.upcomingMovies}
+        type="movie"
+      />
       <List heading="Popular Shows" data={tvshow.popularShows} type="tv" />
       <List heading="Top Rated Shows" data={tvshow.topRatedShows} type="tv" />
     </div>
