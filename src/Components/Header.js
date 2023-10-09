@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { APT_OPTIONS } from "../constant";
 import search1 from "../assets/img/search1.png";
 import cross1 from "../assets/img/cross1.png";
@@ -149,12 +149,13 @@ const Header = () => {
       <div className="absolute w-full z-10">
         <form
           name="search"
-          className={`w-full px-7 bg-white border border-b-black ${
+          className={`w-full pl-7 bg-white border border-b-black ${
             visible ? "block" : "hidden"
           }`}
           onSubmit={(e) => {
             e.preventDefault;
             setSearchQuery("");
+            setVisible(false);
           }}
         >
           <div className="flex">
@@ -167,6 +168,17 @@ const Header = () => {
                 setSearchQuery(e.target.value);
               }}
             />
+            <Link to={"/search?query=" + searchQuery}>
+              <button
+                className="px-3 py-2 border-2 border-gray-300 bg-gray-200  hover:bg-gray-300"
+                onClick={() => {
+                  setSearchQuery("");
+                  setVisible(false);
+                }}
+              >
+                Search
+              </button>
+            </Link>
           </div>
         </form>
         <ul className={`w-full bg-white ${visible ? "block" : "hidden"}`}>
@@ -175,7 +187,7 @@ const Header = () => {
               <li
                 className="px-8 py-1  border-b border-gray-200 text-sm cursor-pointer hover:bg-gray-200"
                 key={suggestion.id}
-                onClick={(e) => setSearch(suggestion.name)}
+                onClick={(e) => setSearchQuery(suggestion.name)}
               >
                 <img className="w-4 inline-block" src={search2} />
                 <span className="ml-2">{suggestion.name}</span>

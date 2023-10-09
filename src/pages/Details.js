@@ -1,6 +1,3 @@
-import React, { useEffect, useState } from "react";
-import { UseParams } from "react-router-dom";
-import { APT_OPTIONS } from "../constant";
 import useGetDetails from "../Hooks/useGetDetails";
 
 const Details = () => {
@@ -32,7 +29,11 @@ const Details = () => {
         ></div>
         <div className="px-8 py-10 flex flex-col md:flex-row text-white gap-4 font-nunito">
           <img
-            src={`https://image.tmdb.org/t/p/original${details?.poster_path}`}
+            src={
+              Object.keys(details).length
+                ? `https://image.tmdb.org/t/p/original${details?.poster_path}`
+                : ""
+            }
             className="rounded-lg w-3/4 md:w-[320px] md:h-[530px] z-20 m-auto sm:m-0 self-center"
           />
           <div className="z-20 p-2 flex flex-col gap-y-10 justify-between">
@@ -58,6 +59,9 @@ const Details = () => {
                       </span>
                     );
                   })}
+              </div>
+              <div className="p-1">
+                Rating: {Number.parseFloat(details?.vote_average).toFixed(2)}/10
               </div>
             </div>
             <p className="italic text-gray-300">{details?.tagline}</p>

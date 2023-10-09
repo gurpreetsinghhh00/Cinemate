@@ -13,6 +13,7 @@ import Movies from "./pages/Movies";
 import TvShows from "./pages/TvShows";
 import Details from "./pages/Details";
 import Error from "./Components/Error";
+import SearchResults from "./pages/SearchResults";
 
 const App = () => {
   return (
@@ -34,16 +35,20 @@ const appRouter = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/movies",
+        path: "movies",
         element: <Movies />,
       },
       {
-        path: "/tv-shows",
+        path: "tv-shows",
         element: <TvShows />,
       },
       {
-        path: "/details/:type/:id",
+        path: "details/:type/:id",
         element: <Details />,
+      },
+      {
+        path: "search",
+        element: <SearchResults />,
       },
     ],
   },

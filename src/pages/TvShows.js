@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import { APT_OPTIONS } from "../constant";
 import Card from "../Components/Card";
 import { Link } from "react-router-dom";
+import Shimmer from "../Components/Shimmer";
 
 const TvShows = () => {
-  const [tvList, setTvList] = useState([]);
+  const [tvList, setTvList] = useState(null);
+  const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(1);
 
   useEffect(() => {
@@ -17,19 +19,28 @@ const TvShows = () => {
       APT_OPTIONS
     );
     const json = await data.json();
-    if (json) {
+    if (json && json.results) {
       setTvList(json.results);
+    } else {
+      setTvList([]);
+      setHasMore(!hasMore);
     }
   };
 
-  return (
+  return tvList === null ? (
+    <Shimmer />
+  ) : (
     <div className="w-full min-h-screen sm:p-2 mt-6">
-      <div className="w-full grid p-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 gap-6 overflow-x-hidden">
-        {tvList?.map((tv) => (
-          <Link to={`/details/tv/${tv.id}`} key={tv.id}>
-            <Card title={tv.name} release_date={tv.first_air_date} {...tv} />
-          </Link>
-        ))}
+      <div className="w-full grid p-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+        {tvList.length === 0 ? (
+          <h1 className="font-bold text-white text-2xl">No Result Found...</h1>
+        ) : (
+          tvList?.map((tv) => (
+            <Link to={`/details/tv/${tv.id}`} key={tv.id}>
+              <Card {...tv} />
+            </Link>
+          ))
+        )}
       </div>
       <div className="text-white flex px-8 pb-6 justify-between mt-4 font-semibold font-nunito self-end">
         <button
@@ -46,8 +57,12 @@ const TvShows = () => {
         </button>
         <span className="p-2">{page}</span>
         <button
-          className="py-2 px-3 bg-red-500 rounded-md hover:bg-red-600"
-          onClick={() => setPage((prev) => prev + 1)}
+          className={`py-2 px-3 bg-red-500 rounded-md hover:bg-red-600 ${
+            hasMore ? "visible" : "invisible"
+          }`}
+          onClick={() => {
+            setPage((prev) => prev + 1);
+          }}
         >
           Next ▶
         </button>

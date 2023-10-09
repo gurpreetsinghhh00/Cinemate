@@ -11,15 +11,15 @@ const PrimaryContainer = () => {
     getTrending();
   }, []);
 
-  // useEffect(() => {
-  //   const timer = setInterval(() => {
-  //     nextSlide();
-  //   }, 5000);
+  useEffect(() => {
+    const timer = setInterval(() => {
+      nextSlide();
+    }, 5000);
 
-  //   return () => {
-  //     clearInterval(timer);
-  //   };
-  // }, [currentIndex]);
+    return () => {
+      clearInterval(timer);
+    };
+  }, [currentIndex]);
 
   const getTrending = async () => {
     const data = await fetch(
@@ -53,12 +53,7 @@ const PrimaryContainer = () => {
               }
             : {}
         }
-      >
-        {/* <img
-          className="w-full h-screen object-fill transform ease-in-out duration-1000"
-          src={`https://image.tmdb.org/t/p/original${trending[currentIndex]?.backdrop_path}`}
-        /> */}
-      </div>
+      ></div>
       <div className="hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] left-5 rounded-full p-2 cursor-pointer text-white bg-black/20">
         <BsChevronCompactLeft size={30} onClick={prevSlide} />
       </div>
