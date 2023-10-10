@@ -1,21 +1,25 @@
 import useGetDetails from "../Hooks/useGetDetails";
+import notAvailable from "../assets/img/notAvailable.png";
+import Loading from "../Components/Loading";
 
 const Details = () => {
-  const data = useGetDetails();
-  const details = data[0];
-  const video = data[1];
+  const [details, video, isLoading] = useGetDetails();
 
-  return (
+  return isLoading ? (
+    <Loading />
+  ) : (
     <div className="w-screen">
-      <div className="w-full aspect-video">
-        <iframe
-          className="w-full h-full"
-          src={"https://www.youtube.com/embed/" + video?.key + "?&autoplay=1"}
-          title="YouTube video player"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowFullScreen
-        ></iframe>
-      </div>
+      {video && (
+        <div className="w-full aspect-video">
+          <iframe
+            className="w-full h-full"
+            src={"https://www.youtube.com/embed/" + video?.key + "?&autoplay=1"}
+            title="YouTube video player"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+          ></iframe>
+        </div>
+      )}
       <div className=" w-screen relative z-10">
         <div
           className="w-screen h-full bg-cover absolute opacity-30"
@@ -32,7 +36,7 @@ const Details = () => {
             src={
               Object.keys(details).length
                 ? `https://image.tmdb.org/t/p/original${details?.poster_path}`
-                : ""
+                : notAvailable
             }
             className="rounded-lg w-3/4 md:w-[320px] md:h-[530px] z-20 m-auto sm:m-0 self-center"
           />

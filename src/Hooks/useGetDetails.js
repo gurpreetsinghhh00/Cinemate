@@ -6,6 +6,7 @@ const useGetDetails = () => {
   const [details, setDetails] = useState({});
   const [video, setVideo] = useState(null);
   const { type, id } = useParams();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     getVideo();
@@ -23,6 +24,7 @@ const useGetDetails = () => {
   };
 
   const getVideo = async () => {
+    setIsLoading(true);
     const data = await fetch(
       `https://api.themoviedb.org/3/${type}/${id}/videos`,
       APT_OPTIONS
@@ -32,11 +34,12 @@ const useGetDetails = () => {
     const filterData = json?.results?.filter(
       (video) => video.type === "Trailer"
     );
-    const trailer = filterData.length ? filterData[0] : json.results[0];
+    const trailer = filterData?.length ? filterData[0] : false;
     setVideo(trailer);
+    setIsLoading(false);
   };
 
-  return [details, video];
+  return [details, video, isLoading];
 };
 
 export default useGetDetails;

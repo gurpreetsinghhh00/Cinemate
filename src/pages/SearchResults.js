@@ -57,6 +57,11 @@ const SearchResults = () => {
       <h1 className="text-white  font-bold text-3xl p-2">
         Top Results for: '{searchParams.get("query")}'
       </h1>
+      {!hasMore && searchList.length === 0 && (
+        <h1 className="text-white mt-8 text-center text-3xl">
+          No results found....
+        </h1>
+      )}
       <div className="w-full grid p-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 gap-6">
         {searchList.map((list) => (
           <Link to={`/details/movie/${list.id}`} key={list.id}>

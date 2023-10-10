@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import { APT_OPTIONS } from "../constant";
 import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import Loading from "./Loading";
 
 const PrimaryContainer = () => {
   const [trending, setTrending] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     getTrending();
@@ -22,12 +24,14 @@ const PrimaryContainer = () => {
   }, [currentIndex]);
 
   const getTrending = async () => {
+    setIsLoading(true);
     const data = await fetch(
       "https://api.themoviedb.org/3/trending/all/day?language=en-US",
       APT_OPTIONS
     );
     const json = await data.json();
     setTrending(json.results?.slice(0, 15));
+    setIsLoading(false);
   };
 
   const prevSlide = () => {
@@ -42,7 +46,9 @@ const PrimaryContainer = () => {
     setCurrentIndex(newIndex);
   };
 
-  return (
+  return isLoading ? (
+    <Loading />
+  ) : (
     <div className="w-full h-56 sm:h-96 lg:h-[90vh] relative group">
       <div
         className="w-full h-full bg-cover duration-500 opacity-80"

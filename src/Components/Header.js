@@ -78,7 +78,9 @@ const Header = () => {
     <header className="w-full">
       <nav className="hidden md:block font-bold bg-black text-white">
         <div className="flex justify-between px-4 py-4 items-center h-16">
-          <div className="font-creepster text-4xl text-red-600">CineMate</div>
+          <div className="font-creepster text-4xl text-red-600">
+            <Link to="/">CineMate</Link>
+          </div>
           <ul className="flex gap-4 mr-4 ">
             {navItems.map((item) => {
               return (
@@ -115,7 +117,9 @@ const Header = () => {
               setIsMenuVisible(!isMenuVisible);
             }}
           />
-          <div className="font-creepster text-4xl text-red-600">CineMate</div>
+          <div className="font-creepster text-4xl text-red-600">
+            <Link to="/">CineMate</Link>
+          </div>
           <div className=" py-2 px-3 text-lg">
             <img
               src={visible ? cross1 : search1}

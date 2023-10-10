@@ -4,21 +4,6 @@ import Card from "../Components/Card";
 import { Link } from "react-router-dom";
 
 const Movies = () => {
-  // const [moviesList, setMoviesList] = useState([]);
-
-  // useEffect(() => {
-  //   getMoviesList();
-  // }, []);
-
-  // const getMoviesList = async () => {
-  //   const data = await fetch(
-  //     "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1",
-  //     APT_OPTIONS
-  //   );
-  //   const json = await data.json();
-  //   setMoviesList(json.results);
-  // };
-
   const [moviesList, setMoviesList] = useState([]);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
@@ -38,7 +23,7 @@ const Movies = () => {
       APT_OPTIONS
     );
     const json = await data.json();
-    if (json?.results) {
+    if (json && json?.results?.length > 0) {
       setMoviesList((prev) => [...prev, ...json.results]);
       setPage(page + 1);
     } else {
@@ -47,7 +32,7 @@ const Movies = () => {
   };
 
   useEffect(() => {
-    const observer = new IntersectionObserver(onIntersection, { threshold: 1 });
+    const observer = new IntersectionObserver(onIntersection);
     if (observer && elementRef.current) {
       observer.observe(elementRef.current);
     }
@@ -70,7 +55,9 @@ const Movies = () => {
       </div>
       <div
         ref={elementRef}
-        className="p-3 animate-pulse text-gray-300 text-xl text-center"
+        className={`${
+          hasMore ? "block" : "hidden"
+        } p-3 animate-pulse text-gray-300 text-xl text-center`}
       >
         Loading...
       </div>
