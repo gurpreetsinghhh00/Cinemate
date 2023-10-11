@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { APT_OPTIONS } from "../constant";
+import { APT_OPTIONS } from "../Utils/constant";
 import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import Loading from "./Loading";

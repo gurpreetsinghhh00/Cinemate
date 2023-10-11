@@ -1,5 +1,5 @@
 import React from "react";
-import { IMAGE_URL } from "../constant";
+import { IMAGE_URL } from "../Utils/constant";
 import notAvailable from "../assets/img/notAvailable.png";
 
 const Card = ({

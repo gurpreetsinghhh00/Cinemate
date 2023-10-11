@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { APT_OPTIONS } from "../constant";
+import { APT_OPTIONS } from "../Utils/constant";
 
 const useGetDetails = () => {
   const [details, setDetails] = useState({});

@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { APT_OPTIONS } from "../constant";
+import { APT_OPTIONS } from "../Utils/constant";
 import search1 from "../assets/img/search1.png";
 import cross1 from "../assets/img/cross1.png";
 import search2 from "../assets/img/search2.png";
 import menu from "../assets/img/menu.png";
 import { useDispatch, useSelector } from "react-redux";
 import { cacheSuggestions } from "../Utils/searchSlice";
+import Logout from "./Logout";
 
 const Header = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -15,6 +16,7 @@ const Header = () => {
   const dispatch = useDispatch();
   const cache = useSelector((store) => store.search);
   const [isMenuVisible, setIsMenuVisible] = useState(false);
+  const authStatus = useSelector((store) => store.user.status);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -55,22 +57,17 @@ const Header = () => {
     {
       name: "Movies",
       url: "/movies",
-      isActive: false,
+      isActive: true,
     },
     {
       name: "TV",
       url: "/tv-shows",
-      isActive: false,
+      isActive: true,
     },
     {
       name: "Login",
-      url: "/tv-shows",
-      isActive: false,
-    },
-    {
-      name: "Signup",
-      url: "/tv-shows",
-      isActive: false,
+      url: "/login",
+      isActive: !authStatus,
     },
   ];
 
@@ -83,7 +80,7 @@ const Header = () => {
           </div>
           <ul className="flex gap-4 mr-4 ">
             {navItems.map((item) => {
-              return (
+              return !item.isActive ? null : (
                 <li className=" py-2 px-3 text-lg" key={item.name}>
                   <NavLink
                     to={item.url}
@@ -96,6 +93,11 @@ const Header = () => {
                 </li>
               );
             })}
+            {authStatus && (
+              <li className=" py-2 px-3 text-lg">
+                <Logout />
+              </li>
+            )}
             <li className=" py-2 px-3 text-lg" key="search">
               <img
                 src={visible ? cross1 : search1}
@@ -131,9 +133,9 @@ const Header = () => {
         <div className={isMenuVisible ? "block" : "hidden"}>
           <ul className="flex flex-col border-t border-gray-500">
             {navItems.map((item) => {
-              return (
+              return !item.isActive ? null : (
                 <li
-                  className="text-center border-b border-gray-500 text-lg py-1"
+                  className="w-full text-center border-b border-gray-500 text-lg py-1"
                   key={item.name}
                 >
                   <NavLink
@@ -147,6 +149,11 @@ const Header = () => {
                 </li>
               );
             })}
+            {authStatus && (
+              <li className="w-full text-center border-b border-gray-500 text-lg py-1">
+                <Logout />
+              </li>
+            )}
           </ul>
         </div>
       </nav>

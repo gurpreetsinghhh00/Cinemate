@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
-import Layout from "./Components/Layout";
+import AppLayout from "./Components/AppLayout";
 import store from "./Utils/store";
 import {
   RouterProvider,
@@ -14,12 +14,14 @@ import TvShows from "./pages/TvShows";
 import Details from "./pages/Details";
 import Error from "./Components/Error";
 import SearchResults from "./pages/SearchResults";
+import Login from "./pages/Login";
+import AuthLayout from "./Components/AuthLayout";
 
 const App = () => {
   return (
     <Provider store={store}>
       <ScrollRestoration />
-      <Layout />
+      <AppLayout />
     </Provider>
   );
 };
@@ -35,20 +37,44 @@ const appRouter = createBrowserRouter([
         element: <Home />,
       },
       {
+        path: "/login",
+        element: (
+          <AuthLayout authentication={false}>
+            <Login />
+          </AuthLayout>
+        ),
+      },
+      {
         path: "movies",
-        element: <Movies />,
+        element: (
+          <AuthLayout authentication={true}>
+            <Movies />
+          </AuthLayout>
+        ),
       },
       {
         path: "tv-shows",
-        element: <TvShows />,
+        element: (
+          <AuthLayout authentication={true}>
+            <TvShows />
+          </AuthLayout>
+        ),
       },
       {
         path: "details/:type/:id",
-        element: <Details />,
+        element: (
+          <AuthLayout authentication={true}>
+            <Details />
+          </AuthLayout>
+        ),
       },
       {
         path: "search",
-        element: <SearchResults />,
+        element: (
+          <AuthLayout authentication={true}>
+            <SearchResults />
+          </AuthLayout>
+        ),
       },
     ],
   },

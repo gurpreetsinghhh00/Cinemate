@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 
 import { useEffect } from "react";
-import { APT_OPTIONS } from "../constant";
+import { APT_OPTIONS } from "../Utils/constant";
 import { addTopRatedShows } from "../Utils/tvShowSlice";
 
 const useTopRatedShows = () => {

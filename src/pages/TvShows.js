@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { APT_OPTIONS } from "../constant";
+import { APT_OPTIONS } from "../Utils/constant";
 import Card from "../Components/Card";
 import { Link } from "react-router-dom";
 import Loading from "../Components/Loading";

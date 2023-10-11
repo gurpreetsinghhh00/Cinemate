@@ -1,5 +1,5 @@
 import React from "react";
-import { IMAGE_URL } from "../constant";
+import { IMAGE_URL } from "../Utils/constant";
 
 const ListCard = ({ title, poster_path, name }) => {
   return (
