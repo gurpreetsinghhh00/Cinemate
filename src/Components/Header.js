@@ -141,7 +141,7 @@ const Header = () => {
                   <NavLink
                     to={item.url}
                     className={({ isActive }) =>
-                      isActive ? "text-red-500" : " hover:text-red-500"
+                      isActive ? "text-red-500" : "hover:text-red-500"
                     }
                   >
                     {item.name}

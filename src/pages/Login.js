@@ -3,7 +3,6 @@ import { BG_URL } from "../Utils/constant";
 import { useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
 import { login as storeLogin } from "../Utils/userSlice";
-import { Link } from "react-router-dom";
 import { validate } from "../Utils/validate";
 import authService from "../appwrite/authService";
 
@@ -68,7 +67,7 @@ const Login = () => {
   };
 
   return (
-    <div className="w-full h-screen font-nunito">
+    <div className="w-full h-screen font-nunito relative">
       <div className="w-full h-full bg-cover opacity-50 absolute">
         <img className="w-full h-full" src={BG_URL} />
       </div>
